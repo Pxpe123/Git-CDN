@@ -1,21 +1,13 @@
-// Check if html2canvas is already loaded
-if (typeof html2canvas === "undefined") {
-  // If html2canvas is not loaded, load it from CDN
-  var script = document.createElement("script");
-  script.src =
-    "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js";
-  document.head.appendChild(script);
+// Create a new script element
+var script = document.createElement("script");
 
-  // Once html2canvas is loaded, execute the main script
-  script.onload = function () {
-    mainScript();
-  };
-} else {
-  // If html2canvas is already loaded, execute the main script directly
-  mainScript();
-}
+// Set the source of the script to the CDN-hosted html2canvas library
+script.src =
+  "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js";
 
-function mainScript() {
+// Once the html2canvas script is loaded, execute the main script
+script.onload = function () {
+  // Main script starts here
   document.addEventListener("keydown", function (event) {
     if (event.ctrlKey && event.key === "F3") {
       event.preventDefault(); // Prevent default Ctrl + F3 behavior
@@ -50,4 +42,4 @@ function mainScript() {
       },
     });
   }
-}
+};
