@@ -2,8 +2,7 @@
 if (typeof html2canvas === "undefined") {
   // If html2canvas is not loaded, load it from CDN
   var script = document.createElement("script");
-  script.src =
-    "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js";
+  script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js";
   document.head.appendChild(script);
 
   // Once html2canvas is loaded, execute the main script
@@ -29,25 +28,23 @@ function mainScript() {
     var element = document.body;
 
     // Use html2canvas to take a screenshot of the element
-    html2canvas(element, {
-      onrendered: function (canvas) {
-        // Convert the canvas to a blob
-        canvas.toBlob(function (blob) {
-          // Write image data to clipboard
-          navigator.clipboard
-            .write([
-              new ClipboardItem({
-                "image/png": blob,
-              }),
-            ])
-            .then(function () {
-              console.log("Image copied to clipboard");
-            })
-            .catch(function (error) {
-              console.error("Failed to copy image to clipboard:", error);
-            });
-        });
-      },
+    html2canvas(element).then(function (canvas) {
+      // Convert the canvas to a data URL
+      var dataURL = canvas.toDataURL("image/png");
+
+      // Create a link element and set the data URL as the href
+      var link = document.createElement("a");
+      link.href = dataURL;
+      link.download = "Untitled.png";
+
+      // Append the link to the document body and trigger the download
+      document.body.appendChild(link);
+      link.click();
+
+      // Remove the link from the document body
+      document.body.removeChild(link);
+    }).catch(function (error) {
+      console.error("Failed to take screenshot:", error);
     });
   }
 }
