@@ -28,23 +28,23 @@ function mainScript() {
     var element = document.body;
 
     // Use html2canvas to take a screenshot of the element
-    html2canvas(element).then(function (canvas) {
-      // Convert the canvas to a data URL
-      var dataURL = canvas.toDataURL("image/png");
+    html2canvas(element, {
+      onrendered: function (canvas) {
+        // Convert the canvas to a data URL
+        var dataURL = canvas.toDataURL("image/png");
 
-      // Create a link element and set the data URL as the href
-      var link = document.createElement("a");
-      link.href = dataURL;
-      link.download = "Untitled.png";
+        // Create a link element and set the data URL as the href
+        var link = document.createElement("a");
+        link.href = dataURL;
+        link.download = "Untitled.png";
 
-      // Append the link to the document body and trigger the download
-      document.body.appendChild(link);
-      link.click();
+        // Append the link to the document body and trigger the download
+        document.body.appendChild(link);
+        link.click();
 
-      // Remove the link from the document body
-      document.body.removeChild(link);
-    }).catch(function (error) {
-      console.error("Failed to take screenshot:", error);
+        // Remove the link from the document body
+        document.body.removeChild(link);
+      }
     });
   }
 }
